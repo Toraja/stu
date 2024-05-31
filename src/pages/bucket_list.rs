@@ -56,13 +56,14 @@ impl BucketListPage {
         match self.view_state {
             ViewState::Default => match key {
                 key_code!(KeyCode::Esc) => {
-                    if self.filter_input_state.input().is_empty() {
-                        self.tx.send(AppEventType::Quit);
-                    } else {
+                    if !self.filter_input_state.input().is_empty() {
                         self.reset_filter();
                     }
                 }
-                key_code!(KeyCode::Enter) if self.non_empty() => {
+                key_code_char!('q') => {
+                    self.tx.send(AppEventType::Quit);
+                }
+                key_code_char!('l') if self.non_empty() => {
                     self.tx.send(AppEventType::BucketListMoveDown);
                 }
                 key_code_char!('j') if self.non_empty() => {

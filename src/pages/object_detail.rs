@@ -82,13 +82,16 @@ impl ObjectDetailPage {
     pub fn handle_key(&mut self, key: KeyEvent) {
         match self.view_state {
             ViewState::Default => match key {
-                key_code!(KeyCode::Esc) => {
+                key_code_char!('q') => {
                     self.tx.send(AppEventType::Quit);
                 }
-                key_code!(KeyCode::Backspace) => {
+                key_code!(KeyCode::Esc) => {
                     self.tx.send(AppEventType::CloseCurrentPage);
                 }
-                key_code_char!('h') | key_code_char!('l') => {
+                key_code_char!('h') => {
+                    self.tx.send(AppEventType::CloseCurrentPage);
+                }
+                key_code!(KeyCode::Tab) | key_code!(KeyCode::BackTab) => {
                     self.toggle_tab();
                 }
                 key_code_char!('j') => match self.tab {
@@ -123,7 +126,7 @@ impl ObjectDetailPage {
                 key_code_char!('S') => {
                     self.open_save_dialog();
                 }
-                key_code_char!('p') => {
+                key_code_char!('p') | key_code_char!('l') => {
                     self.preview();
                 }
                 key_code_char!('r') => {

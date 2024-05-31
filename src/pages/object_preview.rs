@@ -59,10 +59,10 @@ impl ObjectPreviewPage {
     pub fn handle_key(&mut self, key: KeyEvent) {
         match self.view_state {
             ViewState::Default => match key {
-                key_code!(KeyCode::Esc) => {
+                key_code_char!('q') => {
                     self.tx.send(AppEventType::Quit);
                 }
-                key_code!(KeyCode::Backspace) => {
+                key_code!(KeyCode::Esc) => {
                     self.tx.send(AppEventType::CloseCurrentPage);
                 }
                 key_code_char!('j') => {
